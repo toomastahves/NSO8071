@@ -28,7 +28,11 @@ line([200 250],[alpha1 alpha1],'LineWidth',1);
 % temperatures, then mean is 259 K.
 T2 = 250:1:270;
 alpha2 = (270 - T2) / 40;
-T2_mean  = mean(nthroot((1-((270-T2)/40))*I/sigma, 4)); % 259 K
+syms T; % Define symbol for solving equation
+eqnLeft = T; % Left side of equation
+eqnRight = nthroot((1-(270 - T) / 40)*I/sigma, 4); % Right side of equation
+initialGuess = 300; % Initial guess where solution converges to 260 K.
+T_mean = vpasolve(eqnLeft == eqnRight, T, initialGuess); % 260 K
 plot(T2, alpha2);
 
 % Case 3:
